@@ -1,0 +1,22 @@
+---
+version: '3'
+services:
+  build:
+    dockerfile: dockerfile-build
+    links:
+      - prod
+    volumes:
+      - /root/storage:/root/example-tomcat-war/target
+#    volumes_from:
+#      - prod
+  prod:
+    build:
+      dockerfile: dockerfile-prod
+    links:
+      - build
+    volumes:
+      - /root/storage:/usr/local/tomcat/webapps
+#    volumes_from:
+#      - build
+    ports:
+      - 8080:8080

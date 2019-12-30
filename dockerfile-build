@@ -1,0 +1,8 @@
+FROM ubuntu16.04 
+RUN apt-get update && apt install -y git maven 
+WORKDIR /root 
+RUN git clone https://github.com/doct15/example-tomcat-war.git 
+WORKDIR /root/example-tomcat-war 
+RUN mvn package 
+VOLUME /root/example-tomcat-war/target/SimpleTomcatWebApp.war
+CMD ["/bin/bash"]
