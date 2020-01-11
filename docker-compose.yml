@@ -6,10 +6,6 @@ services:
   build:
    context: .
    dockerfile: dockerfile-build
-  networks:
-   main:
-    aliases:
-     - prod
   volumes:
    - /root/storage:/root/example-tomcat-war/target
 
@@ -17,15 +13,9 @@ services:
   build:
    context: .
    dockerfile: dockerfile-prod
-  networks:
-   main:
-    aliases:
-     - devel
   volumes:
    - /root/storage:/usr/local/tomcat/webapps
   volumes_from:
    - devel
   ports:
    - "8080:8080"
-networks:
- main:

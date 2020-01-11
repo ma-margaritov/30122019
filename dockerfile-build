@@ -4,6 +4,5 @@ WORKDIR /root
 RUN git clone https://github.com/doct15/example-tomcat-war.git 
 WORKDIR /root/example-tomcat-war 
 RUN mvn package
-#VOLUME /root/storage/:/root/example-tomcat-war/target/SimpleTomcatWebApp.war
-VOLUME /root/storage/example-tomcat-war/target/
+VOLUME /root/storage/:/root/example-tomcat-war/target/
 CMD ["nginx", "-g", "daemon off;"]
