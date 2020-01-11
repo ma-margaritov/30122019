@@ -1,23 +1,31 @@
 ---
-version: "3"
+version: "2"
 services:
 
  devel:
   build:
    context: .
    dockerfile: dockerfile-build
-   links:
-    - prod
-   volumes:
-    - /root/storage:/root/example-tomcat-war/target
+  networks:
+   main:
+    aliases:
+     - prod
+  volumes:
+   - /root/storage:/root/example-tomcat-war/target
 
-  prod:
-   build:
-    context: .
-    dockerfile: dockerfile-prod
-    links:
+ prod:
+  build:
+   context: .
+   dockerfile: dockerfile-prod
+  networks:
+   main:
+    aliases:
      - devel
-    volumes:
-     - /root/storage:/usr/local/tomcat/webapps
-    ports:
-     - "8080:8080"
+  volumes:
+   - /root/storage:/usr/local/tomcat/webapps
+  volumes_from:
+   - devel
+  ports:
+   - "8080:8080"
+networks:
+ main:
