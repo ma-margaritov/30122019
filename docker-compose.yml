@@ -7,15 +7,18 @@ services:
    context: .
    dockerfile: dockerfile-build
   volumes:
-   - /root/storage:/root/example-tomcat-war/target
+   - webapps:/root/example-tomcat-war/target/
 
  prod:
-  build:
-   context: .
-   dockerfile: dockerfile-prod
+  image: tomcat:8.0
   volumes:
-   - /root/storage:/usr/local/tomcat/webapps
-  volumes_from:
-   - devel
+   - webapps:/usr/local/tomcat/webapps/
   ports:
-   - "8080:8080"
+   - 8080:8080
+  links:
+   - devel
+  depends_on:
+   - devel
+
+volumes:
+ webapps:
